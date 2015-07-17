@@ -15,6 +15,13 @@
 #include "ActionInitialization.hh"
 #include "DetectorConstruction.hh"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv)
@@ -28,6 +35,21 @@ int main(int argc,char** argv)
 
 	// Choose the Random engine
 	G4Random::setTheEngine(new CLHEP::RanecuEngine);
+
+	stringstream ss;
+
+	int nodeId;
+	cin >> nodeId;
+	ss << "seed";
+	ss.fill('0');
+	ss.width(2);
+	ss << nodeId << ".txt";
+
+	srand(time(0));
+	G4Random::setTheSeed(rand());
+	ofstream ofs(ss.str().c_str());
+	ofs << G4Random::getTheSeed() << endl;
+	ofs.close();
 
 	// Construct the default run manager
 	//
